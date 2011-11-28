@@ -2,10 +2,11 @@ from __future__ import division # allows floating point division from integers
 from FreeCAD import Base
 import sys
 import math
+import os
 
 try:
-	path = '../include'
-	i = sys.path.index(path)
+    path = os.path.join(os.path.dirname(__file__), '..', 'include')
+    i = sys.path.index(path)
 except:
 	sys.path.append(path)
 
