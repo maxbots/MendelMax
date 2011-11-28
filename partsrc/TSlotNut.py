@@ -46,4 +46,7 @@ for n in range(num_holes):
     nut = nut.cut(holes)
     holes.translate(Base.Vector(spacing,0,0))
 
+#bring back into octant 1
+nut.translate(Base.Vector(0,nut_bottom_height,nut_bottom_height))
+
 Part.show(nut)
