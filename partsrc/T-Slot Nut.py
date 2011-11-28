@@ -4,7 +4,7 @@ import sys
 import math
 
 try:
-	path = App.ConfigGet('UserHomePath') + '/FreeCad/Mod'
+	path = '../include'
 	i = sys.path.index(path)
 except:
 	sys.path.append(path)
