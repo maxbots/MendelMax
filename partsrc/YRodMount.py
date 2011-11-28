@@ -2,10 +2,11 @@ from __future__ import division # allows floating point division from integers
 from FreeCAD import Base
 import sys
 import math
+import os
 
 try:
-	path = '../include'
-	i = sys.path.index(path)
+    path = os.path.join(os.path.dirname(__file__), '..', 'include')
+    i = sys.path.index(path)
 except:
 	sys.path.append(path)
 
@@ -53,7 +54,7 @@ nuthole = regPolygon(sides = 6, radius = nut_width/2, extrude = nut_depth, Z_off
 cylinder = Part.makeCylinder(bolt_hole_diameter/2,y_rod_diameter/2+part_thickness)
 cutout = cylinder.fuse(nuthole)
 cutout.rotate(Base.Vector(0,0,0),Base.Vector(0,1,0),90)
-cutout.translate(Base.Vector(0,70/2-z_rod_diameter/2-(40-z_rod_diameter)/4,part_thickness*2+nut_width/2))
+cutout.translate(Base.Vector(0,70/2-y_rod_diameter/2-(40-y_rod_diameter)/4,part_thickness*2+nut_width/2))
 mount = mount.cut(cutout)
 #rotations around lines in the middle of the part to re-use the same cutout
 cutout.rotate(Base.Vector((y_rod_diameter/2+part_thickness)/2,70/2,part_thickness*2+nut_width/2),Base.Vector(1,0,0),180)
