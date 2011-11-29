@@ -16,20 +16,23 @@ y_rail_type = 'smooth rod'
 y_rod_diameter = 8
 y_rod_spacing = 100
 
-# import MendelMax.py settings here
+#how thick should the non-flange parts be?
+part_thickness = 4
+#TODO: add logic to specify bolt type instead of bolt dimensions
+#how big are the bolts?
+bolt_hole_diameter = 5.5
+nut_depth = 4
+nut_width = 8.5
+#how far apart should the rod bolt holes be?
+bolt_hole_spacing = 26
+
+#TODO: import MendelMax.py settings here
 
 #large printer version raises concerns, so this is an override to always use the 100mm-wide version
 small_printer = 1
 
 #if(small_printer and y_rod_spacing>100):
     #error
-
-#how thick should the non-flange parts be?
-part_thickness = 4
-#how big are the bolts?
-bolt_hole_diameter = 5.5
-nut_depth = 4
-nut_width = 8.5
 
 #base
 box = Part.makeBox(y_rod_spacing,70,part_thickness)
@@ -41,8 +44,8 @@ else:
   box2.translate(Base.Vector(y_rod_diameter/2+part_thickness,15,0))
 mount = box.cut(box2)
 
+#TODO: make towers wider to accomodate wider bolt_hole_spacing
 #"towers"
-#
 box = Part.makeBox(y_rod_diameter/2+part_thickness,40,nut_width+part_thickness*2)
 box.translate(Base.Vector(0,15,part_thickness))
 mount = mount.fuse(box)
@@ -54,7 +57,7 @@ nuthole = regPolygon(sides = 6, radius = nut_width/2, extrude = nut_depth, Z_off
 cylinder = Part.makeCylinder(bolt_hole_diameter/2,y_rod_diameter/2+part_thickness)
 cutout = cylinder.fuse(nuthole)
 cutout.rotate(Base.Vector(0,0,0),Base.Vector(0,1,0),90)
-cutout.translate(Base.Vector(0,70/2-y_rod_diameter/2-(40-y_rod_diameter)/4,part_thickness*2+nut_width/2))
+cutout.translate(Base.Vector(0,70/2-bolt_hole_spacing/2,part_thickness*2+nut_width/2))
 mount = mount.cut(cutout)
 #rotations around lines in the middle of the part to re-use the same cutout
 cutout.rotate(Base.Vector((y_rod_diameter/2+part_thickness)/2,70/2,part_thickness*2+nut_width/2),Base.Vector(1,0,0),180)
