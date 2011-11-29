@@ -35,7 +35,7 @@ nut_bottom_height = max(extrusion_slot_depth*3/4,min(extrusion_slot_depth,1))
 nut_bottom_cross_section = Part.makePolygon([Base.Vector(0,0,0),Base.Vector(0,nut_bottom_width,0),Base.Vector(0,nut_bottom_width - nut_bottom_height,-nut_bottom_height),Base.Vector(0,nut_bottom_height,-nut_bottom_height),Base.Vector(0,0,0)])
 face = Part.Face(nut_bottom_cross_section)
 nut_bottom = face.extrude(Base.Vector(nut_length,0,0))
-nut_bottom.translate(Base.Vector(0,-(nut_bottom_width-(extrusion_slot_opening_width - 1))/2,0))
+nut_bottom.translate(Base.Vector(0,-(nut_bottom_width-(extrusion_slot_opening_width - 0.5))/2,0))
 nut = nut_bottom.fuse(nut_top)
 
 bolthole = Part.makeCylinder(bolt_diameter/2,extrusion_slot_opening_depth - 0.25)
