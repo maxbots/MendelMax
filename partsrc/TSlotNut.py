@@ -13,40 +13,66 @@ except:
 from RegularPolygon import regPolygon
 
 # all measurements in mm
-extrusion_slot_width = 12
-extrusion_slot_depth = 4
-extrusion_slot_opening_width = 6
-extrusion_slot_opening_depth = 2
+
+# .-------.       .-------. -
+# |       | <-A-> |       |   B
+# | .-----         -----. | -    -    
+# | |       <-C->       | | _ D  ^
+# |  \                 /  |      |
+# |   \               /   |      E
+# |    \             /    |      v
+# |     ----<-F->----     |      -
+#
+
+extrusion_slot_opening_width = 6 #A
+extrusion_slot_opening_depth = 2 #B
+extrusion_slot_width = 11 #C
+extrusion_slot_vertical_depth = 1 #D
+extrusion_slot_depth = 4 #E
+#F=C-(E-D) as long as the diagonals are 45 degrees
+
 bolt_diameter = 4
-metal_nut_width = 7.5
+metal_nut_width = 8
+
 min_padding = 1
-spacing = 20
+hole_spacing = 20
+
+#clearance between printed part and metal surfaces
+gap_horizontal = 0.25
+gap_vertical = 0.1
 
 num_holes = 2
 
-base_padding = max(min_padding,max(bolt_diameter+1,metal_nut_width * (2/math.sqrt(3))+1))
-nut_simple_length = (num_holes-1) * spacing
-nut_length = nut_simple_length + base_padding
+base_padding = max(bolt_diameter/2,metal_nut_width * (1/math.sqrt(3)))+min_padding
+hole_span = (num_holes-1) * hole_spacing
+nut_length = hole_span + base_padding*2
 
-nut_top = Part.makeBox(nut_length, extrusion_slot_opening_width - 0.5, extrusion_slot_opening_depth - 0.25)
+nut_top = Part.makeBox(nut_length, extrusion_slot_opening_width - gap_horizontal*2, extrusion_slot_opening_depth - gap_vertical)
 
-nut_bottom_width = extrusion_slot_width - 0.5
-nut_bottom_height = max(extrusion_slot_depth*3/4,min(extrusion_slot_depth,1))
-nut_bottom_cross_section = Part.makePolygon([Base.Vector(0,0,0),Base.Vector(0,nut_bottom_width,0),Base.Vector(0,nut_bottom_width - nut_bottom_height,-nut_bottom_height),Base.Vector(0,nut_bottom_height,-nut_bottom_height),Base.Vector(0,0,0)])
+nut_bottom_width = extrusion_slot_width - gap_horizontal*2
+nut_bottom_height = extrusion_slot_depth - gap_vertical
+nut_bottom_cross_section = Part.makePolygon([
+Base.Vector(0,0,0),
+Base.Vector(0,nut_bottom_width,0),
+Base.Vector(0,nut_bottom_width,-(extrusion_slot_vertical_depth-gap_vertical)),
+Base.Vector(0,nut_bottom_width - (nut_bottom_height-(extrusion_slot_vertical_depth-gap_vertical)),-nut_bottom_height),
+Base.Vector(0,nut_bottom_height-(extrusion_slot_vertical_depth-gap_vertical),-nut_bottom_height),
+Base.Vector(0,0,-(extrusion_slot_vertical_depth-gap_vertical)),
+Base.Vector(0,0,0)])
 face = Part.Face(nut_bottom_cross_section)
 nut_bottom = face.extrude(Base.Vector(nut_length,0,0))
 nut_bottom.translate(Base.Vector(0,-(nut_bottom_width-(extrusion_slot_opening_width - 0.5))/2,0))
 nut = nut_bottom.fuse(nut_top)
 
-bolthole = Part.makeCylinder(bolt_diameter/2,extrusion_slot_opening_depth - 0.25)
+bolthole = Part.makeCylinder(bolt_diameter/2,extrusion_slot_opening_depth - gap_vertical)
 nuthole = regPolygon(sides = 6, radius = metal_nut_width/2, extrude = nut_bottom_height, Z_offset = -nut_bottom_height)
 holes = bolthole.fuse(nuthole)
-holes.translate(Base.Vector(base_padding/2,(extrusion_slot_opening_width-0.5)/2,0))
+holes.translate(Base.Vector(base_padding,(extrusion_slot_opening_width-gap_horizontal*2)/2,0))
 for n in range(num_holes):
     nut = nut.cut(holes)
-    holes.translate(Base.Vector(spacing,0,0))
+    holes.translate(Base.Vector(hole_spacing,0,0))
 
 #bring back into octant 1
-nut.translate(Base.Vector(0,nut_bottom_height,nut_bottom_height))
+nut.translate(Base.Vector(0,(nut_bottom_width - (extrusion_slot_opening_width - gap_horizontal*2))/2,nut_bottom_height))
 
 Part.show(nut)
