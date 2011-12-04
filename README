@@ -1,6 +1,6 @@
 This is FreeCAD code to generate the parts for a MendelMax. At present this is VERY incomplete, but it is a work in 
 progress. If you just want to print a MendelMax, your best bet for now is to use the STL's from Thingiverse.
 
-To excecute the FreeCAD scripts, see the tutorial at http://kludgineering.com/tikiwiki/tiki-index.php?page=Getting+Started+with+FreeCAD+scripting
+To excecute the FreeCAD scripts, see the tutorial at http://mendelmax.com/tikiwiki/tiki-index.php?page=Getting+Started+with+FreeCAD+scripting
 
 See http://www.MendelMax.com for full details.
