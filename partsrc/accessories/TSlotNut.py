@@ -5,7 +5,7 @@ import sys
 import os
 
 try:
-    path = os.path.join(os.path.dirname(__file__), '..', 'include')
+    path = os.path.join(os.path.dirname(__file__), '..', '..', 'include')
     i = sys.path.index(path)
 except:
 	sys.path.append(path)
