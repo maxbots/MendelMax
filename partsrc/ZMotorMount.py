@@ -72,6 +72,7 @@ box = box.mirror(Base.Vector((hole_spacing-(extrusion_profile/2*math.cos(math.ra
 box.rotate(Base.Vector(hole_spacing-(extrusion_profile/2*math.cos(math.radians(30))-extrusion_profile/2*math.sin(math.radians(30)))*2,0,0),Base.Vector(0,0,1),-60)
 mount = mount.fuse(box)
 
+#TODO: use parametric motor dimensions
 #horizontal motor mount plate
 box = Part.makeBox(hole_spacing-(extrusion_profile/2*math.cos(math.radians(30))+extrusion_profile/2*math.sin(math.radians(30)))*2,thick_typical,75)
 box.translate(Base.Vector(extrusion_profile*math.sin(math.radians(30)),extrusion_profile*math.cos(math.radians(30)),0))
