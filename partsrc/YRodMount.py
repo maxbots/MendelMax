@@ -35,7 +35,7 @@ nut_depth = 4
 nut_width = 8.5
 
 #large printer version raises concerns, so this is an override to always use the 100mm-wide version
-small_printer = False
+small_printer = True
 
 #if(small_printer and y_rod_spacing>100):
     #error
