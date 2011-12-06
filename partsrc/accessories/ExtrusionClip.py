@@ -53,7 +53,7 @@ flange_width = 20
 #how many bolts/nuts does this part take?
 num_holes = 2
 
-base_padding = max(bolt_diameter/2+thick_min,clip_padding)
+base_padding = max(bolt_diameter/2+thick_min,clip_length_padding)
 hole_span = max((num_holes-1),0) * hole_spacing_medium
 clip_length = hole_span + base_padding*2
 clip_width = extrusion_profile + clip_thickness*2 + gap_horizontal*2
