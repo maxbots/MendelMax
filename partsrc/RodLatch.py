@@ -11,14 +11,18 @@ except:
     sys.path.append(path)
 
 z_rod_diameter = 8
+y_rod_diameter = 8
 #how far apart should the bolt holes be?
-hole_spacing_wide = 26
+hole_spacing_wide = 30
 #how thick should the non-flange parts be?
 thick_typical = 4.25
 #how thick should the plastic under the bolt be?
 thick_compress = 3
 
 from MendelMax import *
+
+#TODO: copies of this part for both rod sizes during final print
+rod_diameter = z_rod_diameter
 
 #how big are the bolts?
 #TODO: replace with use of bolt module after it's written
