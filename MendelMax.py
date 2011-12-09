@@ -11,7 +11,11 @@ except:
     sys.path.append(path)
 
 def MendelMax():
-
+    # Determines whether we are just generating the model, or if we are exporting the STL's as we go
+    # 0 = No STL's
+    # 1 = Export STL's
+    export_stl = 0
+    
     #all measurements are in mm until unit conversion is added
 
     #extrusion_profile 20mm, 25mm, 1"
